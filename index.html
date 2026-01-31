@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium To-Do List | Professional Edition</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="./app.js"></script>
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #8b5cf6;
+            --success: #4ade80;
+            --warning: #fbbf24;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 35px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 { color: white; margin-bottom: 25px; text-align: center; font-size: 28px; font-weight: 700; }
+
+        /* Statistika Paneli */
+        .stats-dashboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .stat-card span { display: block; font-size: 22px; font-weight: 800; color: white; }
+        .stat-card p { font-size: 10px; color: rgba(255,255,255,0.5); text-transform: uppercase; margin-top: 4px; }
+        
+        .stat-card.total { border-bottom: 3px solid var(--accent); }
+        .stat-card.done { border-bottom: 3px solid var(--success); }
+        .stat-card.wait { border-bottom: 3px solid var(--warning); }
+
+        /* Input qismi */
+        .input-group { display: flex; gap: 12px; margin-bottom: 30px; }
+        input#todo-input {
+            flex: 1; background: rgba(255, 255, 255, 0.07); border: 1px solid var(--glass-border);
+            border-radius: 16px; padding: 14px 20px; color: white; outline: none; transition: 0.3s;
+        }
+        input#todo-input:focus { border-color: var(--accent); }
+
+        button#add-btn {
+            background: var(--accent); border: none; border-radius: 16px; width: 52px; height: 52px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s;
+        }
+
+        /* Vazifa ko'rinishi */
+        ul#todo-list { list-style: none; }
+        li {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border);
+            border-radius: 18px; padding: 16px; margin-bottom: 12px;
+            display: flex; align-items: center; justify-content: space-between; color: white;
+        }
+
+        .item-left { display: flex; align-items: center; gap: 14px; flex: 1; cursor: pointer; }
+        
+        /* Matn va Vaqt konteyneri */
+        .task-content { display: flex; flex-direction: column; gap: 4px; }
+        .task-text { font-size: 16px; font-weight: 500; }
+        .task-time { 
+            font-size: 11px; 
+            color: rgba(255, 255, 255, 0.4); 
+            display: flex; 
+            align-items: center; 
+            gap: 4px; 
+        }
+
+        .completed { opacity: 0.4; }
+        .completed .task-text { text-decoration: line-through; }
+
+        .actions { display: flex; gap: 12px; }
+        .edit-btn:hover { color: var(--success); cursor: pointer; }
+        .delete-btn:hover { color: #f87171; cursor: pointer; }
+        
+        .edit-input { 
+            background: rgba(255,255,255,0.1); border: 1px solid var(--accent); 
+            color: white; padding: 8px; border-radius: 10px; width: 100%; outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Rejalarim</h2>
+
+        <div class="stats-dashboard">
+            <div class="stat-card total">
+                <span id="total-tasks">0</span>
+                <p>Jami</p>
+            </div>
+            <div class="stat-card done">
+                <span id="completed-tasks">0</span>
+                <p>Bajarildi</p>
+            </div>
+            <div class="stat-card wait">
+                <span id="pending-tasks">0</span>
+                <p>Kutilmoqda</p>
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <input type="text" id="todo-input" placeholder="Vazifa kiriting..." autocomplete="off">
+            <button id="add-btn"><i data-lucide="plus" size="24"></i></button>
+        </div>
+
+        <ul id="todo-list"></ul>
+    </div>
+
+</body>
+</html>
